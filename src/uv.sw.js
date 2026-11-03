@@ -88,6 +88,16 @@ class UVServiceWorker extends Ultraviolet.EventEmitter {
 				requestCtx.base = requestCtx.url = new URL(requestCtx.url.pathname);
 			}
 
+			if (
+				["document", "iframe"].includes(request.destination) &&
+				!isYouTubeHost(requestCtx.url.hostname)
+			) {
+				return new Response("Only youtube.com pages are available.", {
+					status: 403,
+					headers: { "content-type": "text/plain; charset=utf-8" },
+				});
+			}
+
 			if (request.referrer && request.referrer.startsWith(location.origin)) {
 				const referer = new URL(ultraviolet.sourceUrl(request.referrer));
 
@@ -304,6 +314,10 @@ class UVServiceWorker extends Ultraviolet.EventEmitter {
 }
 
 self.UVServiceWorker = UVServiceWorker;
+
+function isYouTubeHost(hostname) {
+	return hostname === "youtube.com" || hostname.endsWith(".youtube.com");
+}
 
 class ResponseContext {
 	/**

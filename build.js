@@ -15,6 +15,13 @@ await mkdir("dist");
 // don't compile these files
 await copyFile("src/sw.js", "dist/sw.js");
 await copyFile("src/uv.config.js", "dist/uv.config.js");
+await copyFile("public/index.html", "dist/index.html");
+await copyFile("public/_redirects", "dist/_redirects");
+await mkdir("dist/bare-mux");
+await copyFile(
+	"node_modules/@mercuryworkshop/bare-mux/dist/worker.js",
+	"dist/bare-mux/worker.js"
+);
 
 let builder = await build({
 	platform: "browser",
@@ -25,8 +32,12 @@ let builder = await build({
 		"uv.client": "./src/client/index.js",
 		"uv.handler": "./src/uv.handler.js",
 		"uv.sw": "./src/uv.sw.js",
+		"uv.app": "./src/app.js",
 	},
 	define: {
+		"process.env.UV_BARE_SERVER_URL": JSON.stringify(
+			process.env.UV_BARE_SERVER_URL || ""
+		),
 		"process.env.ULTRAVIOLET_VERSION": JSON.stringify(
 			process.env.ULTRAVIOLET_VERSION
 		),
@@ -50,6 +61,19 @@ let builder = await build({
 	logLevel: "info",
 	outdir: "dist/",
 });
+
+await build({
+	platform: "browser",
+	format: "esm",
+	entryPoints: {
+		"bare-client": "@mercuryworkshop/bare-as-module3",
+	},
+	bundle: true,
+	minify: !isDevelopment,
+	logLevel: "info",
+	outdir: "dist/",
+});
+
 if (isDevelopment) {
 	await writeFile("metafile.json", JSON.stringify(builder.metafile));
 }
