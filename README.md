@@ -67,7 +67,7 @@ npm run build
 npx wrangler pages deploy dist
 ```
 
-The entry page accepts only `youtube.com` and its subdomains. The service worker also blocks navigation and frames to other hosts, while allowing YouTube's supporting media and API requests.
+The entry page automatically opens proxied `youtube.com`. The service worker blocks navigation and frames to other hosts, while allowing YouTube's supporting media and API requests.
 
 Cloudflare Pages hosts the static frontend. Deploy the Bare backend separately from `backend/` to Fly.io; it applies a server-side allowlist to YouTube and its media/API hosts. Set `UV_BARE_SERVER_URL` to the backend URL ending in `/bare/` in the Pages build environment, then rebuild the site. For local builds, set that variable before running `npm run build`.
 
