@@ -69,7 +69,7 @@ npx wrangler pages deploy dist
 
 The entry page automatically opens proxied `youtube.com`. The service worker blocks navigation and frames to other hosts, while allowing YouTube's supporting media and API requests.
 
-Cloudflare Pages hosts the static frontend. Deploy the Bare backend separately from `backend/` to Fly.io; it applies a server-side allowlist to YouTube and its media/API hosts. Set `UV_BARE_SERVER_URL` to the backend URL ending in `/bare/` in the Pages build environment, then rebuild the site. For local builds, set that variable before running `npm run build`.
+Cloudflare Pages hosts the static frontend. Deploy the Bare backend separately from `backend/` to Fly.io; it applies a server-side allowlist to YouTube and its media/API hosts. The build defaults to this repository's Fly app at `https://ultraviolet-slgz8a.fly.dev/bare/`. If you deploy the backend under a different URL, set `UV_BARE_SERVER_URL` to that URL (ending in `/bare/`) in the Pages build environment and rebuild the site. For local builds, set this variable before running `npm run build`.
 
 The Fly app can be created and deployed from the `backend/` directory with `fly launch --no-deploy` followed by `fly deploy`. Change the `app` name and `primary_region` in `backend/fly.toml` to values available to your Fly account. The health endpoint is `/healthz`.
 

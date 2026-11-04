@@ -36,7 +36,8 @@ let builder = await build({
 	},
 	define: {
 		"process.env.UV_BARE_SERVER_URL": JSON.stringify(
-			process.env.UV_BARE_SERVER_URL || ""
+			process.env.UV_BARE_SERVER_URL ||
+				"https://ultraviolet-slgz8a.fly.dev/bare/"
 		),
 		"process.env.ULTRAVIOLET_VERSION": JSON.stringify(
 			process.env.ULTRAVIOLET_VERSION
