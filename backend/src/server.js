@@ -5,6 +5,11 @@ import { isAllowedHost } from "./allowlist.js";
 const port = Number(process.env.PORT || 8080);
 const bare = createBareServer("/bare/", {
 	logErrors: process.env.NODE_ENV !== "production",
+	connectionLimiter: {
+		maxConnectionsPerIP: 1200,
+		windowDuration: 60,
+		blockDuration: 60,
+	},
 	filterRemote(remote) {
 		if (
 			!["http:", "https:", "ws:", "wss:"].includes(remote.protocol) ||
@@ -26,6 +31,18 @@ const server = createServer((request, response) => {
 	}
 
 	if (bare.shouldRoute(request)) {
+		response.setHeader("access-control-allow-origin", "*");
+		response.setHeader("access-control-allow-headers", "*");
+		response.setHeader("access-control-allow-methods", "*");
+
+		if (request.method === "OPTIONS") {
+			response.writeHead(204, {
+				"access-control-max-age": "7200",
+			});
+			response.end();
+			return;
+		}
+
 		void bare.routeRequest(request, response);
 		return;
 	}
