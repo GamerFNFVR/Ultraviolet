@@ -73,6 +73,8 @@ Cloudflare Pages hosts the static frontend. Deploy the Bare backend separately f
 
 The Fly app can be created and deployed from the `backend/` directory with `fly launch --no-deploy` followed by `fly deploy`. Change the `app` name and `primary_region` in `backend/fly.toml` to values available to your Fly account. The health endpoint is `/healthz`.
 
+The backend allows HTTP headers up to 64 KB to accommodate large upstream YouTube responses.
+
 For a complete application setup, see [Ultraviolet-App](https://github.com/titaniumnetwork-dev/Ultraviolet-App).
 
 ## Documentation

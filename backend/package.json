@@ -4,7 +4,7 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"start": "node src/server.js",
+		"start": "node --max-http-header-size=65536 src/server.js",
 		"test": "node --test"
 	},
 	"dependencies": {
