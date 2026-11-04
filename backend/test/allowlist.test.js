@@ -7,6 +7,8 @@ test("allows YouTube and its media/API hosts", () => {
 		"youtube.com",
 		"www.youtube.com",
 		"youtubei.googleapis.com",
+		"fonts.googleapis.com",
+		"fonts.gstatic.com",
 		"r1---sn.googlevideo.com",
 		"i.ytimg.com",
 		"yt3.ggpht.com",

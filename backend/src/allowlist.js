@@ -2,6 +2,8 @@ const allowedDomains = [
 	"youtube.com",
 	"youtubei.googleapis.com",
 	"youtube.googleapis.com",
+	"fonts.googleapis.com",
+	"fonts.gstatic.com",
 	"googlevideo.com",
 	"ytimg.com",
 	"ggpht.com",
